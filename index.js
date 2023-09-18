@@ -1,33 +1,28 @@
-const mongoose = require('mongoose');
 const express = require('express');
-//routes
-const { movieRouter } = require('./routes/movie.routes');
-const { userRouter } = require('./routes/user.routes');
-const { authRouter } = require('./routes/auth.routes');
-
-const { initializeDatabase } = require('./db');
-//middlewares
 const cors = require('cors');
 const helmet = require('helmet');
-const { globalErrorHandler } = require('./middlewares/globalErrorHandler.middleware');
-const { routeErrorHandler } = require('./middlewares/routeErrorHandler.middleware');
+const connectDatabase = require('./config/db');
+
+//Connect to Db
+connectDatabase();
+
+//Routes
 
 const app = express();
+//Body Parser
 app.use(express.json());
 
-initializeDatabase();
-
+//Middlewares
 app.use(cors({}));
 app.use(helmet())
 
-app.use('/', authRouter);
-app.use('/', userRouter);
-app.use('/movies', movieRouter);
-
-app.use(globalErrorHandler);
-app.use(routeErrorHandler);
+//Mount routers
+app.get("/", (req, res) => {
+  res.send("<h2>Welcome to Zwigato</h2>")
+})
 
 const PORT = process.env['PORT'] || 2000;
+
 app.listen(PORT, () => {
   console.log('server started');
 });
