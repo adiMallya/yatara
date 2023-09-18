@@ -1,36 +1,48 @@
 const fs = require('fs');
+const mongoose = require('mongoose');
+const connectDatabase = require('./config/db');
 
-const Movie = require('./models/movies');
+const Restaurent = require('./models/restaurent.model');
+const User = require('./models/user.model');
 
-const jsonData = fs.readFileSync('./data/movies.json', 'utf-8');
-const moviesData = JSON.parse(jsonData);
+//Connect to DB
+connectDatabase();
 
-async function seedMovieDb(){
-  try{
-    for(const movie of moviesData){
-      const newMovie = new Movie({
-        title : movie.title,
-        releaseYear : movie.releaseYear,
-        genre : movie.genre,
-        director : movie.director,
-        actors : movie.actors,
-        language : movie.language,
-        country : movie.country,
-        rating : movie.rating,
-        plot : movie.plot,
-        awards : movie.awards,
-        posterUrl : movie.posterUrl,
-        trailerUrl : movie.trailerUrl
-      });
+//Read data from files
+const userData = JSON.parse(fs.readFileSync('./_data/users.json', 'utf-8'));
+const restaurentData = JSON.parse(fs.readFileSync('./_data/restaurents.json', 'utf-8'));
 
-      await newMovie.save();
-      console.log(`Movie ${newMovie.title} seeded into DB.`)
-    }
-  }catch(err){
-    console.error('Error in seeding database', err)
-  }finally{
+//Import data
+const importData = async () => {
+  try {
+    await User.create(userData);
+    await Restaurent.create(restaurentData);
+
+    console.log('Data imported...');
+    process.exit();
+  } catch (err) {
+    console.error(err);
+  } finally {
+    mongoose.disconnect()
+  }
+}
+//Delete data
+const deleteData = async () => {
+  try {
+    await User.deleteMany();
+    await Restaurent.deleteMany();
+
+    console.log("Data destroyed...");
+    process.exit();
+  } catch (err) {
+    console.error(err);
+  } finally {
     mongoose.disconnect()
   }
 }
 
-seedMovieDb();
+if (process.argv[2] === "-i") {
+  importData();
+} else if (process.argv[2] === "-d") {
+  deleteData();
+}
