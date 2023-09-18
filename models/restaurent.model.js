@@ -11,6 +11,7 @@ const RestaurentSchema = new mongoose.Schema({
   name: {
     type: String,
     required: [true, "Please add a name."],
+    unique: true,
     trim: true,
     maxLength: [30, "Name can not be more than 30 characters"]
   },
