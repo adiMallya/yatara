@@ -10,6 +10,8 @@ connectDatabase();
 
 //Routes
 const restaurants = require('./routes/restaurant.routes');
+const menu = require('./routes/menu.routes');
+
   
 const app = express();
 //Body Parser
@@ -28,6 +30,7 @@ app.get('/', (req, res) => {
   res.send('<h1>Welcome to RestoRev API</h1>')
 });
 app.use('/api/v1/restaurants', restaurants);
+app.use('/api/v1/restaurants', menu);
 
 //Error handling
 app.use(errorHandler);
