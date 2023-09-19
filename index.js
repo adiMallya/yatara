@@ -11,7 +11,7 @@ connectDatabase();
 //Routes
 const restaurants = require('./routes/restaurant.routes');
 const menu = require('./routes/menu.routes');
-
+const reviews = require('./routes/review.routes');
   
 const app = express();
 //Body Parser
@@ -31,6 +31,7 @@ app.get('/', (req, res) => {
 });
 app.use('/api/v1/restaurants', restaurants);
 app.use('/api/v1/restaurants', menu);
+app.use('/api/v1/restaurants', reviews);
 
 //Error handling
 app.use(errorHandler);
