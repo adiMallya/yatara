@@ -52,7 +52,7 @@ exports.updateRestaurant = async (restaurantId, dataToUpdate) => {
    const updatedRestaurant = await Restaurent.findByIdAndUpdate(restaurantId, dataToUpdate, { new: true, runValidators : true});
 
   if(!updatedRestaurant){
-    throw new ErrorResponse(`Restaurant not found.`, 400);
+    throw new ErrorResponse(`Restaurant not found with id of ${restaurantId}.`, 400);
   }
     
   return updatedRestaurant;
@@ -60,3 +60,40 @@ exports.updateRestaurant = async (restaurantId, dataToUpdate) => {
     throw err;
   }
 }
+
+exports.deleteRestaurant = async (restaurantId) => {
+  try{
+    const deletedMovie = await Restaurent.findByIdAndDelete(restaurantId);
+
+    if(!deletedMovie){
+      throw new ErrorResponse(`Restaurant not found with id of ${restaurantId}.`, 400);
+    }
+
+    const restaurants = await Restaurent.find();
+    return restaurants;
+  }catch(err){
+    throw err;
+  }
+}
+
+exports.searchRestaurantsByLocation = async (location) => {
+  try{
+    const regex = new RegExp(location, 'i')
+    
+    const searchResult = Restaurent.find(
+      { $or: [
+        {city: location},
+        {address: {$regex : regex}}
+      ]}
+    );
+    
+    if(!Array.isArray(searchResult)){
+      throw new ErrorResponse(`No restaurant found by the location of ${location}.`, 400);
+    }
+
+    return searchResult;
+  }catch(err){
+    throw err;
+  }
+}
+

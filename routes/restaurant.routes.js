@@ -4,7 +4,9 @@ const {
   readRestaurant,
   readAllRestaurants,
   readRestaurantsByCuisine,
-  updateRestaurant
+  updateRestaurant,
+  deleteRestaurant,
+  searchRestaurantsByLocation
 } = require('../controllers/restaurant.controller');
 
 const router = express.Router();
@@ -19,6 +21,24 @@ router.post('/', async (req, res, next) => {
     res.status(201).json({
       success: true,
       restaurant
+    });
+  } catch (err) {
+    next(err);
+  }
+});
+
+// @desc : Search restaurants by address/city
+// @route : /api/v1/restaurants/search
+// @access : Public
+router.get('/search', async (req, res, next) => {
+  try {
+    const { location } = req.query;
+    
+    const restaurants = await searchRestaurantsByLocation(location);
+
+    res.status(200).json({
+      success: true,
+      restaurants
     });
   } catch (err) {
     next(err);
@@ -75,6 +95,22 @@ router.post('/:id', async (req, res, next) => {
   }
 });
 
+// @desc : Delete a restaurant
+// @route : /api/v1/restaurants/:id
+// @access : Public
+router.delete('/:id', async (req, res, next) => {
+  try{
+    const restaurants = await deleteRestaurant(req.params.id);
+
+  res.status(200).json({
+    success: true,
+    count: restaurants.length
+  });
+  }catch(err){
+   next(err); 
+  }
+});
+
 // @desc : Get all restaurants
 // @route : /api/v1/restaurants
 // @access : Public
@@ -84,6 +120,7 @@ router.get('/', async (req, res, next) => {
 
   res.status(200).json({
     success: true,
+    count: restaurants.length,
     restaurants
   }); 
   }catch(err){
