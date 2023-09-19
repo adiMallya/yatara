@@ -1,10 +1,23 @@
 const mongoose = require('mongoose');
 
 const MenuSchema = new mongoose.Schema({
-  name: String,
-  price: Number,
-  description: String,
-  isVeg: Boolean
+  name: {
+    type: String,
+    required: [true, "Please add the name of the dish."]
+  },
+  price: {
+    type: Number,
+    required: [true, "Please add the price."]
+  },
+  description: {
+    type: String,
+    default: "No description available."
+  },
+  isVeg: {
+    type: Boolean,
+    enum: ["yes", "no"],
+    required: [true, "Please mention isVeg or not."]
+  }
 });
 
 const RestaurentSchema = new mongoose.Schema({
