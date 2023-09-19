@@ -51,7 +51,10 @@ const RestaurentSchema = new mongoose.Schema({
     default: 0
   },
   reviews: [{
-    reviewText: String,
+    reviewText: {
+      type: String,
+      required: [true, 'Missing review text.']
+    },
     rating: {
       type: Number,
       min: 0,
@@ -60,7 +63,8 @@ const RestaurentSchema = new mongoose.Schema({
     },
     user: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'User'
+      ref: 'User',
+      required: [true, 'Missing user reference.']
     },
   }]
 }, { timestamps: true });
