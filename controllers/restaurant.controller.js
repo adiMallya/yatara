@@ -80,7 +80,7 @@ exports.searchRestaurantsByLocation = async (location) => {
   try{
     const regex = new RegExp(location, 'i')
     
-    const searchResult = Restaurent.find(
+    const searchResult = await Restaurent.find(
       { $or: [
         {city: location},
         {address: {$regex : regex}}
@@ -97,3 +97,16 @@ exports.searchRestaurantsByLocation = async (location) => {
   }
 }
 
+exports.filterRestaurantsByRating = async (rating) => {
+  try {
+    const restaurants = await Restaurent.find({ averageRating: {$gte: rating}});
+
+    if(!restaurants.length){
+      throw new ErrorResponse(`No restaurant found with minimum rating of ${rating}.`, 400);
+    }
+
+    return restaurants;
+  } catch (err) {
+    throw err;
+  }
+}

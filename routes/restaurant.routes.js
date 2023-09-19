@@ -6,7 +6,8 @@ const {
   readRestaurantsByCuisine,
   updateRestaurant,
   deleteRestaurant,
-  searchRestaurantsByLocation
+  searchRestaurantsByLocation,
+  filterRestaurantsByRating
 } = require('../controllers/restaurant.controller');
 
 const router = express.Router();
@@ -35,6 +36,22 @@ router.get('/search', async (req, res, next) => {
     const { location } = req.query;
     
     const restaurants = await searchRestaurantsByLocation(location);
+
+    res.status(200).json({
+      success: true,
+      restaurants
+    });
+  } catch (err) {
+    next(err);
+  }
+});
+
+// @desc : Find restaurants by minimum rating
+// @route : /api/v1/restaurants/rating/:minimumRating
+// @access : Public
+router.get('/rating/:minimumRating', async (req, res, next) => {
+  try {
+    const restaurants = await filterRestaurantsByRating(req.params.minimumRating);
 
     res.status(200).json({
       success: true,
