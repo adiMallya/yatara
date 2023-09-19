@@ -24,6 +24,9 @@ app.use(cors({}));
 app.use(helmet())
 
 //Mount routers
+app.get('/', (req, res) => {
+  res.send('<h1>Welcome to RestoRev API</h1>')
+});
 app.use('/api/v1/restaurants', restaurants);
 
 //Error handling
@@ -31,6 +34,15 @@ app.use(errorHandler);
 
 const PORT = process.env['PORT'] || 2000;
 
-app.listen(PORT, () => {
-  console.log('server started');
-});
+const server = app.listen(
+  PORT,
+  console.log(`Server running in ${process.env['ENV']} mode
+    on port ${PORT}`)
+);
+
+// Handle unhandled promise rejections
+process.on('unhandledRejection', (err, promise) => {
+  console.error(`Error : ${err.message}`);
+
+  server.close(() => process.exit(1));
+})
