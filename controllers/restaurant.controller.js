@@ -46,3 +46,17 @@ exports.readRestaurantsByCuisine = async (cuisineName) => {
     throw err;
   }
 }
+
+exports.updateRestaurant = async (restaurantId, dataToUpdate) => {
+  try{
+   const updatedRestaurant = await Restaurent.findByIdAndUpdate(restaurantId, dataToUpdate, { new: true, runValidators : true});
+
+  if(!updatedRestaurant){
+    throw new ErrorResponse(`Restaurant not found.`, 400);
+  }
+    
+  return updatedRestaurant;
+  }catch(err){
+    throw err;
+  }
+}

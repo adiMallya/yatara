@@ -3,7 +3,8 @@ const {
   createRestaurant,
   readRestaurant,
   readAllRestaurants,
-  readRestaurantsByCuisine
+  readRestaurantsByCuisine,
+  updateRestaurant
 } = require('../controllers/restaurant.controller');
 
 const router = express.Router();
@@ -46,6 +47,24 @@ router.get('/cuisine/:cuisineType', async (req, res, next) => {
 router.get('/:name', async (req, res, next) => {
   try{
     const restaurant = await readRestaurant(req.params.name);
+
+  res.status(200).json({
+    success: true,
+    restaurant
+  });
+  }catch(err){
+   next(err); 
+  }
+});
+
+// @desc : Update a restaurant by ID
+// @route : /api/v1/restaurants/:id
+// @access : Public
+router.post('/:id', async (req, res, next) => {
+  try{
+    const data = req.body;
+
+    const restaurant = await updateRestaurant(req.params.id, data);
 
   res.status(200).json({
     success: true,
