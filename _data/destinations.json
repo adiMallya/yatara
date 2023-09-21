@@ -1,0 +1,53 @@
+[
+  {
+		"_id": "5d713995b721c3bb38c1f5d0",
+    "name": "Lavasa",
+    "location": "Pune District, Maharashtra, India",
+    "description": "Lavasa is famous for its engaging and exciting water activities.",
+    "rating": 3.2,
+    "reviews": [
+      {
+        "_id": "64f750d48c856b84279af7db",
+        "user": "5c8a1d5b0190b214360dc035",
+        "reviewText": "We went with our kids, had a fun day in the waters."
+      },
+      {
+        "_id": "64f750d48c856b84279af7dc",
+        "user": "5d7a514b5d2c12c7449be046",
+        "reviewText": "Went during peak season. Wasn't worth the hype."
+      }
+    ]
+	},
+	{
+		"_id": "5d713a66ec8f2b88b8f830b8",
+    "name": "Aguada fort",
+    "location": "Candolim, Goa, India",
+    "rating": 2.7,
+    "reviews": [
+      {
+        "_id": "64fc79105e5a946468ae67a3",
+        "user": "5d7a514b5d2c12c7449be045",
+        "reviewText": "Too much crowd. I hate this place."
+      }
+    ]
+	},
+	{
+		"_id": "5d725a037b292f5f8ceff787",
+    "name": "Alleppey Backwater Cruise",
+    "location": "Alappuzha, Kerala, India",
+    "description": "It's best known for houseboat cruises along the rustic Kerala backwaters, a network of tranquil canals and lagoons.",
+    "rating": 4.2,
+    "reviews": [
+      {
+        "_id": "64f750d47c846b84279af7ac",
+        "user": "5c8a1d5b0190b214360dc035",
+        "reviewText": "Contact Mr Chidambaram +91-9765638900 for reasonable package. They catch the best fish."
+      },
+      {
+        "_id": "64f751d48c856b84279bf4de",
+        "user": "5c8a1d5b0190b214360dc033",
+        "reviewText": "Go during december, the evenings are so pleasant here."
+      }
+    ]
+	}
+]
