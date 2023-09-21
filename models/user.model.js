@@ -17,6 +17,17 @@ const UserSchema = mongoose.Schema({
     required: [true, "Please add a password"],
     minlength: 6
   },
+  username: {
+    type: String,
+    required: [true, "Please use a unique username."],
+    unique: true,
+    trim: true
+  },
+  profileImage: {
+    type: String,
+    trim: true,
+    default: "https://www.imageholder.com/#noimage"
+  }
 }, { timestamps : true })
 
 module.exports = mongoose.model('User', UserSchema);
