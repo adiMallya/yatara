@@ -27,6 +27,22 @@ router.post('/', async (req, res, next) => {
   }
 });
 
+// @desc : Find travel destinations sorted by rating
+// @route : /api/v1/destinations/rating
+// @access : Public
+router.get('/rating', async (req, res, next) => {
+  try {    
+    const destinations = await readTravelDestinationsByRating();
+
+    res.status(200).json({
+      success: true,
+      destinations
+    });
+  } catch (err) {
+    next(err);
+  }
+});
+
 // @desc : Find a travel destination by name
 // @route : /api/v1/destinations/:name
 // @access : Public
