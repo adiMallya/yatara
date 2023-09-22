@@ -9,8 +9,7 @@ const errorHandler = require('./middlewares/error.middleware');
 connectDatabase();
 
 //Routes
-const restaurants = require('./routes/restaurant.routes');
-const menu = require('./routes/menu.routes');
+const destinations = require('./routes/destination.routes');
 const reviews = require('./routes/review.routes');
   
 const app = express();
@@ -27,11 +26,10 @@ app.use(helmet())
 
 //Mount routers
 app.get('/', (req, res) => {
-  res.send('<h1>Welcome to RestoRev API</h1>')
+  res.send('<h1>Welcome to Yatara API</h1>')
 });
-app.use('/api/v1/restaurants', restaurants);
-app.use('/api/v1/restaurants', menu);
-app.use('/api/v1/restaurants', reviews);
+app.use('/api/v1/destinations', destinations);
+// app.use('/api/v1/destinations', reviews);
 
 //Error handling
 app.use(errorHandler);
