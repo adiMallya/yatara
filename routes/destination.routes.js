@@ -6,7 +6,8 @@ const {
   readTravelDestinationsByLocation,
   updateTravelDestination,
   deleteTravelDestination,
-  readTravelDestinationsByRating
+  readTravelDestinationsByRating,
+  filterDestinationsByRating
 } = require('../controllers/destination.controller');
 
 const router = express.Router();
@@ -33,6 +34,22 @@ router.post('/', async (req, res, next) => {
 router.get('/rating', async (req, res, next) => {
   try {    
     const destinations = await readTravelDestinationsByRating();
+
+    res.status(200).json({
+      success: true,
+      destinations
+    });
+  } catch (err) {
+    next(err);
+  }
+});
+
+// @desc : Find travel destinations by minimum rating
+// @route : /api/v1/restaurants/filter/:minRating
+// @access : Public
+router.get('/filter/:minRating', async (req, res, next) => {
+  try {
+    const destinations = await filterDestinationsByRating(req.params.minRating);
 
     res.status(200).json({
       success: true,

@@ -89,3 +89,17 @@ exports.readTravelDestinationsByRating = async () => {
     throw err;
   }
 }
+
+exports.filterDestinationsByRating = async (rating) => {
+  try{
+    const destinations = await Destination.find({ rating: {$gte: rating}});
+
+    if(!destinations.length){
+      throw new ErrorResponse(`No restaurant found with minimum rating of ${rating}.`, 400);
+    }
+
+    return destinations;
+  }catch(err){
+    throw err;
+  }
+}
