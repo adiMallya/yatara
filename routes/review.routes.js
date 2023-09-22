@@ -1,17 +1,17 @@
 const express = require('express');
 const {
-  addRestaurantReviewAndRating,
-  getUserReviewsForRestaurant
+  addReview,
+  getDestinationReviewsWithUserDetails
 } = require('../controllers/review.controller');
 
 const router = express.Router();
 
-// @desc : Get all User reviews for a restaurant
-// @route : /api/v1/restaurants/:restaurantId/reviews
+// @desc : Get all User reviews for a travel destination
+// @route : /api/v1/destinations/:destinationId/reviews
 // @access : Public
-router.get('/:restaurantId/reviews', async (req, res, next) => {
+router.get('/:destinationId/reviews', async (req, res, next) => {
   try{
-  const userReviews = await getUserReviewsForRestaurant(req.params.restaurantId);
+  const userReviews = await getDestinationReviewsWithUserDetails(req.params.destinationId);
 
   res.status(200).json({
     success: true,
@@ -22,18 +22,18 @@ router.get('/:restaurantId/reviews', async (req, res, next) => {
   }
 });
 
-// @desc : Add a review and rating to a restaurant
-// @route : /api/v1/restaurants/:restaurantId/reviews
+// @desc : Write a review of a travel destination
+// @route : /api/v1/destinations/:destinationId/reviews
 // @access : Public
-router.post('/:restaurantId/reviews', async (req, res, next) => {
+router.post('/:destinationId/reviews', async (req, res, next) => {
   try{
-    const { userId, reviewText, rating } = req.body;
+    const { userId, reviewText } = req.body;
 
-    const restaurant = await addRestaurantReviewAndRating(req.params.restaurantId, userId, rating, reviewText);
+    const destination = await addReview(req.params.destinationId, userId, reviewText);
     
   res.status(200).json({
     success: true,
-    restaurant
+    destination
   });
   }catch(err){
    next(err); 

@@ -29,7 +29,7 @@ app.get('/', (req, res) => {
   res.send('<h1>Welcome to Yatara API</h1>')
 });
 app.use('/api/v1/destinations', destinations);
-// app.use('/api/v1/destinations', reviews);
+app.use('/api/v1/destinations', reviews);
 
 //Error handling
 app.use(errorHandler);
